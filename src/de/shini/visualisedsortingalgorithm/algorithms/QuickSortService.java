@@ -69,12 +69,10 @@ public class QuickSortService<T, U> extends AbstractSortService<T> {
 				if (lo < hi && !forceStop) {
 					int p = partition(lo, hi);
 					Thread left = new Thread(() -> quicksort(lo, p));
-					Thread right = new Thread(() -> quicksort(p + 1, hi));
 					left.start();
-					right.start();
+					quicksort(p + 1, hi);
 					try {
 						left.join();
-						right.join();
 					} catch (InterruptedException e) {
 						forceStop = true;
 					}
